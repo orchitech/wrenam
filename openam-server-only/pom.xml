@@ -95,15 +95,6 @@
                                     <outputDirectory>${project.build.directory}/XUI</outputDirectory>
                                     <includes>**/*</includes>
                                 </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.forgerock.openam</groupId>
-                                    <artifactId>openam-auth-deviceprint-scripts</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>zip</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${project.build.directory}/openam_TEMP</outputDirectory>
-                                    <includes>**/*.js</includes>
-                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -699,12 +690,12 @@
             <groupId>org.forgerock.openam</groupId>
             <artifactId>openam-datastore</artifactId>
         </dependency>
-        
+
         <dependency>
         	<groupId>org.forgerock.openam</groupId>
         	<artifactId>openam-radius-common</artifactId>
         </dependency>
-        
+
         <dependency>
         	<groupId>org.forgerock.openam</groupId>
         	<artifactId>openam-radius-server</artifactId>
@@ -759,11 +750,6 @@
         <dependency>
             <groupId>org.forgerock.openam</groupId>
             <artifactId>openam-auth-persistentcookie</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.forgerock.openam</groupId>
-            <artifactId>openam-auth-deviceprint-module</artifactId>
         </dependency>
 
         <dependency>
