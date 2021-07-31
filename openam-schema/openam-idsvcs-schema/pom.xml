@@ -38,6 +38,7 @@
             <!-- see http://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.5/jaxrpc/jaxrpc-tools.html
                  for Documentation on the wscompile tool. -->
             <plugin>
+                <?m2e execute onConfiguration?>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -49,7 +50,7 @@
                             <target name="idsvcs">
                                 <path id="wscompile.path">
                                     <path refid="maven.compile.classpath" />
-                                    <pathelement path="${env.JAVA_HOME}/lib/tools.jar" />
+                                    <pathelement path="${java.home}/../lib/tools.jar" />
                                 </path>
 
                                 <copy file="${project.basedir}/src/main/resources/xml/IdentityServices.wsdl" tofile="${project.build.directory}/classes/IdentityServices.wsdl" />

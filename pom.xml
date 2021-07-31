@@ -43,7 +43,7 @@
     <parent>
         <groupId>org.wrensecurity</groupId>
         <artifactId>wrensec-parent</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.2.1-SNAPSHOT</version>
     </parent>
 
     <!-- Component Definition -->
@@ -99,15 +99,17 @@
 
     <!-- Component Properties -->
     <properties>
+        <pgpWhitelistArtifact>org.wrensecurity:wrensec-pgp-whitelist:1.5.4</pgpWhitelistArtifact>
+
         <!-- **************************************************************** -->
         <maven.build.timestamp.format>yyyy-MMM-dd HH:mm:ss</maven.build.timestamp.format>
         <!-- **************************************************************** -->
 
         <!-- Surefire Argument Line -->
-        <java.surefire.options>-Xms256m -Xmx256m -XX:MaxPermSize=96m</java.surefire.options>
+        <java.surefire.options>-Xms256m -Xmx256m</java.surefire.options>
 
         <!-- JavaDoc Setting Properties -->
-        <javadoc.options>-J-Xms2g -J-Xmx2g -J-XX:MaxPermSize=512m</javadoc.options>
+        <javadoc.options>-J-Xms2g -J-Xmx2g</javadoc.options>
         <!-- Shade plugin setting for ClientSDK build -->
         <generate.clientsdk.sources>false</generate.clientsdk.sources>
 
@@ -123,14 +125,14 @@
         <checkstyleUnitTestSuppressionsLocation>checkstyle/suppressions.xml</checkstyleUnitTestSuppressionsLocation>
 
         <forgerock.bloomfilter.version>1.0.1</forgerock.bloomfilter.version>
-        <forgerock.ui.version>16.0.4</forgerock.ui.version>
-        <forgerock.guice.version>2.0.2</forgerock.guice.version>
+        <forgerock.ui.version>22.1.0-SNAPSHOT</forgerock.ui.version>
+        <forgerock.guice.version>2.0.0</forgerock.guice.version>
 
         <javadoc-utils.version>1.0.0</javadoc-utils.version>
         <ant.contrib.version>1.0b3</ant.contrib.version>
         <guice.version>3.0</guice.version>
         <restlet.version>2.3.4</restlet.version>
-        <powermock.version>1.6.6</powermock.version>
+        <powermock.version>2.0.9</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
         <santuario.xmlsec.version>1.5.6</santuario.xmlsec.version>
         <click.version>2.3.0</click.version>
@@ -195,8 +197,6 @@
         <forgerock.license.artifactId>cddl-license</forgerock.license.artifactId>
         <forgerock.license.version>1.0.0</forgerock.license.version>
         <checkstyleFailOnError>false</checkstyleFailOnError>
-
-        <pgpWhitelistArtifact>org.wrensecurity:wrensec-pgp-whitelist:1.1.0</pgpWhitelistArtifact>
     </properties>
 
     <!-- Profiles -->
@@ -458,7 +458,6 @@
 
     <!-- Maven Repositories -->
     <repositories>
-        <!-- Needed to retrieve parent POM -->
         <repository>
             <id>wrensecurity-releases</id>
             <name>Wren Security Release Repository</name>
@@ -473,7 +472,6 @@
             </releases>
         </repository>
 
-        <!-- Needed to retrieve parent POM -->
         <repository>
             <id>wrensecurity-snapshots</id>
             <name>Wren Security Snapshot Repository</name>
@@ -486,15 +484,6 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
-        </repository>
-
-        <repository>
-            <id>oracle-repository</id>
-            <name>Oracle Repository</name>
-            <url>http://download.oracle.com/maven</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
@@ -512,7 +501,7 @@
             <dependency>
                 <groupId>org.forgerock.commons</groupId>
                 <artifactId>commons-bom</artifactId>
-                <version>22.0.0-SNAPSHOT</version>
+                <version>22.1.0-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -560,17 +549,17 @@
                 <version>${project.version}</version>
             </dependency>
 
-	        <dependency>
-	        	<groupId>org.forgerock.openam</groupId>
-	        	<artifactId>openam-radius-common</artifactId>
-	        	<version>${project.version}</version>
-	        </dependency>
+            <dependency>
+                <groupId>org.forgerock.openam</groupId>
+                <artifactId>openam-radius-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-	        <dependency>
-	        	<groupId>org.forgerock.openam</groupId>
-	        	<artifactId>openam-radius-server</artifactId>
-	        	<version>${project.version}</version>
-	        </dependency>
+            <dependency>
+                <groupId>org.forgerock.openam</groupId>
+                <artifactId>openam-radius-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.forgerock.openam</groupId>
@@ -1741,6 +1730,12 @@
                 <groupId>org.forgerock.commons</groupId>
                 <artifactId>forgerock-guice-core</artifactId>
                 <version>${forgerock.guice.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mockito</groupId>
+                        <artifactId>mockito-all</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.forgerock.commons</groupId>
@@ -1752,6 +1747,12 @@
                 <artifactId>forgerock-guice-test</artifactId>
                 <version>${forgerock.guice.version}</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mockito</groupId>
+                        <artifactId>mockito-all</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -1846,7 +1847,7 @@
             </dependency>
             <dependency>
                 <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito</artifactId>
+                <artifactId>powermock-api-mockito2</artifactId>
                 <version>${powermock.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -1924,7 +1925,7 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
+            <artifactId>mockito-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -2166,8 +2167,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <!-- Local build for MSHADE-237 and MSHADE-182 -->
-                    <version>3.0.0-forgerock-alpha-1</version>
+                    <version>3.2.4</version>
                 </plugin>
                 <plugin>
                     <groupId>net.ju-n.maven.plugins</groupId>

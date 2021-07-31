@@ -121,6 +121,13 @@
 
         <dependency>
             <groupId>org.forgerock.openam</groupId>
+            <artifactId>openam-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.forgerock.openam</groupId>
             <artifactId>openam-xacml3-schema</artifactId>
         </dependency>
 

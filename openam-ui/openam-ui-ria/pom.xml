@@ -335,7 +335,7 @@
                             <nodeVersion>v4.6.2</nodeVersion>
                             <npmVersion>3.10.9</npmVersion>
                             <downloadRoot>https://nodejs.org/dist/</downloadRoot>
-                            <npmDownloadRoot>https://wrensecurity.jfrog.io/wrensecurity/api/npm/npm-virtual/npm/-/</npmDownloadRoot>
+                            <npmDownloadRoot>https://wrensecurity.jfrog.io/artifactory/api/npm/npm-virtual/npm/-/</npmDownloadRoot>
                         </configuration>
                     </execution>
                     <execution>

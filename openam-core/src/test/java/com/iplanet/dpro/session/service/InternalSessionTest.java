@@ -12,18 +12,23 @@
  * information: "Portions copyright [year] [name of copyright owner]".
  *
  * Copyright 2016 ForgeRock AS.
+ * Portions Copyright 2021 Wren Security.
  */
 
 package com.iplanet.dpro.session.service;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
-
-import java.util.concurrent.TimeUnit;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.iplanet.dpro.session.SessionException;
 import com.iplanet.dpro.session.SessionID;
@@ -36,12 +41,18 @@ import org.forgerock.openam.utils.TimeTravelUtil.FrozenTimeService;
 import org.forgerock.util.time.TimeService;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.wrensecurity.wrenam.test.AbstractMockBasedTest;
 
-public class InternalSessionTest {
+import com.iplanet.dpro.session.SessionException;
+import com.iplanet.dpro.session.SessionID;
+import com.iplanet.sso.SSOToken;
+import com.sun.identity.session.util.SessionUtilsWrapper;
+import com.sun.identity.shared.debug.Debug;
+
+public class InternalSessionTest extends AbstractMockBasedTest {
 
     @Mock private SessionService mockSessionService;
     @Mock private SessionServiceConfig mockSessionServiceConfig;
@@ -52,7 +63,6 @@ public class InternalSessionTest {
 
     @BeforeMethod
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
         TimeTravelUtil.setBackingTimeService(FrozenTimeService.INSTANCE);
         FrozenTimeService.INSTANCE.setCurrentTimeMillis(0);
     }
